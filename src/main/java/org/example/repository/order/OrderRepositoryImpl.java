@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.example.model.order.Order;
+import org.example.model.order.OrderStatus;
 import org.example.model.product.Product;
 import org.example.model.user.User;
 import org.springframework.stereotype.Repository;
@@ -17,7 +18,7 @@ import java.util.UUID;
 public class OrderRepositoryImpl implements OrderRepository {
     @PersistenceContext
     private EntityManager entityManager;
-    String getUserOrder = "select o from orders o where o.user.id=?1";
+    String getUserOrder = "select o from orders o where o.user.id=?1 and o.status=?2";
     String DELETE = "delete from orders o where o.id=?1";
     String GET_BY_ORDER_ID = "select o.product.id from orders o where o.id=?1";
     String UPDATE = "update orders o set o.amount=?1,o.balance=?3 where o.id=?2";
@@ -39,6 +40,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         try {
             return entityManager.createQuery(getUserOrder, Order.class).
                     setParameter(1, userId).
+                    setParameter(2, OrderStatus.CREATED).
                     getResultList();
         } catch (NoResultException e) {
             return null;

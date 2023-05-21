@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -123,7 +122,7 @@ public class OrderController {
         cardService.update(card);
         cardService.update(card1);
         historyService.add(card,card1,cost);
-        if(Objects.equals(product.getAmount(), amount)){
+        if(product.getAmount()-amount==0){
             product.setAmount(0);
             product.setIsActive(ProductStatus.NO_ACTIVE);
             productService.edit(product,productId);
