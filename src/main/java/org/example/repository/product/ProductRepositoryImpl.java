@@ -69,7 +69,9 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public List<Product> getAll() {
-        return entityManager.createQuery(getAll, Product.class).setParameter(1, ProductStatus.ACTIVE).getResultList();
+        return entityManager.createQuery(getAll, Product.class).
+                setParameter(1, ProductStatus.ACTIVE).
+                getResultList();
     }
 
     @Override
